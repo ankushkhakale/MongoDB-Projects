@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Smart Study Tracker</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <h1>📚 Smart Study Tracker</h1>
+
+  <div class="form">
+    <input id="topic" placeholder="Topic">
+    <input id="duration" type="number" placeholder="Duration (min)">
+    <input id="focus" type="number" placeholder="Focus (1-5)">
+    <button onclick="addSession()">Add Session</button>
+  </div>
+
+  <h2>📖 Sessions</h2>
+  <ul id="sessions"></ul>
+
+  <h2>📊 Insights</h2>
+  <button onclick="loadInsights()">Load Insights</button>
+  <ul id="insights"></ul>
+
+  <h2>🧠 Best Study Time</h2>
+  <button onclick="bestTime()">Check</button>
+  <p id="bestTime"></p>
+
+  <script src="script.js"></script>
+</body>
+</html>
