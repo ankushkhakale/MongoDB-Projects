@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Smart Study Tracker — log study sessions, analyze productivity, and find your best study hours using Flask and MongoDB.">
+  <title>Smart Study Tracker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast" role="alert" aria-live="polite"></div>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header-inner">
+      <h1>📚 Smart Study Tracker</h1>
+      <p class="subtitle">Log sessions · Track insights · Find your peak focus hours</p>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- Add Session Form -->
+    <section class="card" aria-label="Add a study session">
+      <h2 class="card-title">➕ Add Study Session</h2>
+      <form id="session-form" class="form" onsubmit="handleAddSession(event)">
+        <div class="form-group">
+          <label for="topic">Topic</label>
+          <input
+            id="topic"
+            type="text"
+            placeholder="e.g. MongoDB Aggregation"
+            autocomplete="off"
+            required
+            minlength="1"
+            maxlength="100"
+          >
+        </div>
+        <div class="form-group">
+          <label for="duration">Duration (minutes)</label>
+          <input
+            id="duration"
+            type="number"
+            placeholder="e.g. 45"
+            required
+            min="1"
+            max="600"
+          >
+        </div>
+        <div class="form-group">
+          <label for="focus">Focus Level (1–5)</label>
+          <input
+            id="focus"
+            type="number"
+            placeholder="e.g. 4"
+            required
+            min="1"
+            max="5"
+          >
+        </div>
+        <button type="submit" id="add-btn" class="btn btn-primary">
+          <span class="btn-text">Add Session</span>
+          <span class="btn-loader" hidden>Adding…</span>
+        </button>
+      </form>
+    </section>
+
+    <!-- Sessions List -->
+    <section class="card" aria-label="Session history">
+      <div class="section-header">
+        <h2 class="card-title">📖 Session History</h2>
+        <button id="refresh-btn" class="btn btn-secondary btn-sm" onclick="loadSessions()" aria-label="Refresh sessions">
+          ↻ Refresh
+        </button>
+      </div>
+      <div id="sessions-loading" class="loading-state" hidden>
+        <div class="spinner"></div><span>Loading sessions…</span>
+      </div>
+      <ul id="sessions" class="session-list" aria-live="polite"></ul>
+      <p id="sessions-empty" class="empty-state" hidden>No sessions yet. Add your first one above!</p>
+    </section>
+
+    <!-- Edit Session Modal -->
+    <div id="edit-modal" class="modal" hidden>
+      <div class="modal-content card">
+        <h2 class="card-title">✏️ Edit Session</h2>
+        <form id="edit-form" class="form" onsubmit="handleEditSession(event)">
+          <input type="hidden" id="edit-id">
+          <div class="form-group">
+            <label for="edit-topic">Topic</label>
+            <input id="edit-topic" type="text" required minlength="1" maxlength="100">
+          </div>
+          <div class="form-group">
+            <label for="edit-duration">Duration (minutes)</label>
+            <input id="edit-duration" type="number" required min="1" max="600">
+          </div>
+          <div class="form-group">
+            <label for="edit-focus">Focus Level (1–5)</label>
+            <input id="edit-focus" type="number" required min="1" max="5">
+          </div>
+          <div class="modal-actions">
+            <button type="button" class="btn btn-secondary" onclick="closeEditModal()">Cancel</button>
+            <button type="submit" id="save-edit-btn" class="btn btn-primary">
+              <span class="btn-text">Save Changes</span>
+              <span class="btn-loader" hidden>Saving…</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Insights -->
+    <section class="card" aria-label="Topic insights">
+      <div class="section-header">
+        <h2 class="card-title">📊 Topic Insights</h2>
+        <button id="insights-btn" class="btn btn-secondary btn-sm" onclick="loadInsights()">Load Insights</button>
+      </div>
+      <div id="insights-loading" class="loading-state" hidden>
+        <div class="spinner"></div><span>Calculating…</span>
+      </div>
+      <ul id="insights" class="insight-list" aria-live="polite"></ul>
+      <p id="insights-empty" class="empty-state" hidden>No insights available. Add some sessions first.</p>
+    </section>
+
+    <!-- Best Study Time -->
+    <section class="card" aria-label="Best study time">
+      <div class="section-header">
+        <h2 class="card-title">🧠 Best Study Hour</h2>
+        <button id="besttime-btn" class="btn btn-secondary btn-sm" onclick="checkBestTime()">Analyse</button>
+      </div>
+      <div id="besttime-loading" class="loading-state" hidden>
+        <div class="spinner"></div><span>Analysing your peak hour…</span>
+      </div>
+      <p id="besttime-result" class="best-time-result" aria-live="polite"></p>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <p>Built with Flask &amp; MongoDB · <a href="https://github.com/ankushkhakale/MongoDB-Projects" target="_blank" rel="noopener">View on GitHub</a></p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
