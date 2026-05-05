@@ -15,8 +15,11 @@
 |---|---|
 | ➕ **Add Sessions** | Log topic, duration (in minutes), and focus level (1–5) |
 | 📖 **View Sessions** | Retrieve all study sessions sorted by most recent |
+| ✏️ **Edit Sessions** | Update existing study sessions easily with a modal |
+| 🗑️ **Delete Sessions**| Remove incorrect or unwanted study sessions |
 | 📊 **Topic Insights** | Aggregated total study time and average focus per topic |
 | 🧠 **Best Study Hour** | Detects which hour of the day gives the highest focus |
+| 🎨 **Modern UI** | Sleek dark theme with responsive design and toast notifications |
 
 ---
 
@@ -114,6 +117,8 @@ open frontend/index.html
 | `GET` | `/` | Health check — API status |
 | `POST` | `/add` | Add a new study session |
 | `GET` | `/sessions` | Fetch all sessions (latest first) |
+| `PUT` | `/update/<id>` | Update an existing study session |
+| `DELETE` | `/delete/<id>` | Delete a study session |
 | `GET` | `/insights` | Topic-wise aggregated stats |
 | `GET` | `/best-time` | Best study hour of the day |
 
